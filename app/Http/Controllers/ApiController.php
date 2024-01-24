@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -26,6 +27,15 @@ class ApiController extends Controller
         return $token->plainTextToken;
     }
 
+
+    public function getUsers()
+    {
+        $users = User::all();
+        return response()->json(['success' => true,
+            'data'=> $users ,
+            'status' => 200]);
+
+    }
 
     /**
      * Store a newly created resource in storage.

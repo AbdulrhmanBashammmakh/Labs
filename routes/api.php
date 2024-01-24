@@ -18,3 +18,4 @@ use Illuminate\Support\Facades\Route;
 //    return $request->user();
 //});
 Route::post('login', [\App\Http\Controllers\ApiController::class,'login']);
+Route::post('users', [\App\Http\Controllers\ApiController::class,'getUsers'])->middleware('auth:sanctum');
