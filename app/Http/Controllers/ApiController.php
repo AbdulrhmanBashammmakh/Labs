@@ -28,7 +28,7 @@ class ApiController extends Controller
     }
 
 
-    public function getUsers()
+    public function getUsers(): \Illuminate\Http\JsonResponse
     {
         $users = User::all();
         return response()->json(['success' => true,
@@ -36,6 +36,15 @@ class ApiController extends Controller
             'status' => 200]);
 
     }
+
+//    public function register(): \Illuminate\Http\JsonResponse
+//    {
+////        $users = User::all();
+////        return response()->json(['success' => true,
+////            'data'=> $users ,
+////            'status' => 200]);
+//
+//    }
 
     /**
      * Store a newly created resource in storage.

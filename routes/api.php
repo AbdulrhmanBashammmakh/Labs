@@ -19,3 +19,7 @@ use Illuminate\Support\Facades\Route;
 //});
 Route::post('login', [\App\Http\Controllers\ApiController::class,'login']);
 Route::post('users', [\App\Http\Controllers\ApiController::class,'getUsers'])->middleware('auth:sanctum');
+Route::resource('cate',App\Http\Controllers\CateController::class)->middleware('auth:sanctum');
+Route::resource('unit',App\Http\Controllers\UnitController::class)->middleware('auth:sanctum');
+Route::resource('product',App\Http\Controllers\ProductController::class)->middleware('auth:sanctum');
+Route::resource('supply',App\Http\Controllers\SupplyController::class)->middleware('auth:sanctum');

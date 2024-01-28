@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Cate;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 class CateController extends Controller
 {
@@ -13,6 +14,10 @@ class CateController extends Controller
     public function index()
     {
        $cate= Cate::all();
+        return response()->json(['success' => true,
+            'data'=> $cate ,
+            'status' => 200]);
+
     }
 
     /**
@@ -20,7 +25,11 @@ class CateController extends Controller
      */
     public function create()
     {
-        //
+        return response()->json(
+//            ['success' => true,
+//            'data'=> $users ,
+//            'status' => 200]
+        );
     }
 
     /**
@@ -28,7 +37,28 @@ class CateController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $input = $request->all();
+        $validator= Validator::make($input,['cate' => "required"]);
+
+        if($validator -> fails()){
+            return response()->json(
+            ['success' => false,
+            'message'=> "sorry not stored",
+                "error"=> $validator->errors()]
+            );
+        }
+        $cate= new Cate;
+        $cate->cate = $request->cate;
+        $cate->save();
+        
+        return response()->json(
+            ['success' => true,
+                'message'=> "done",
+                "Cate"=>  $cate]
+        );
+//
+
+//        return redirect('/cate');
     }
 
     /**
