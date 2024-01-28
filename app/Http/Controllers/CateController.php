@@ -50,7 +50,7 @@ class CateController extends Controller
         $cate= new Cate;
         $cate->cate = $request->cate;
         $cate->save();
-        
+
         return response()->json(
             ['success' => true,
                 'message'=> "done",
@@ -64,11 +64,21 @@ class CateController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Cate $cate)
+    public function show($id)
     {
-        //
+        $cate= Cate::find($id);
+        if(is_null($cate)){
+            return response()->json(
+                ['success' => false,
+                    'message'=> "sorry not found"]
+            );
+        }
+        return response()->json(
+            ['success' => true,
+                'message'=> "done",
+                "cate"=>  $cate]
+        );
     }
-
     /**
      * Show the form for editing the specified resource.
      */

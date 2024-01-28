@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Cate;
 use App\Models\Unit;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 class UnitController extends Controller
 {
@@ -12,7 +14,10 @@ class UnitController extends Controller
      */
     public function index()
     {
-        //
+        $unit= Unit::all();
+        return response()->json(['success' => true,
+            'data'=> $unit ,
+            'status' => 200]);
     }
 
     /**
@@ -28,15 +33,44 @@ class UnitController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $input = $request->all();
+        $validator= Validator::make($input,['name' => "required"]);
+
+        if($validator -> fails()){
+            return response()->json(
+                ['success' => false,
+                    'message'=> "sorry not stored",
+                    "error"=> $validator->errors()]
+            );
+        }
+        $unit= new Unit();
+        $unit->name = $request->name;
+        $unit->save();
+
+        return response()->json(
+            ['success' => true,
+                'message'=> "done",
+                "unit"=>  $unit]
+        );
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(Unit $unit)
+    public function show($id)
     {
-        //
+        $unit= Unit::find($id);
+        if(is_null($unit)){
+            return response()->json(
+                ['success' => false,
+                    'message'=> "sorry not found"]
+            );
+        }
+        return response()->json(
+            ['success' => true,
+                'message'=> "done",
+                "unit"=>  $unit]
+        );
     }
 
     /**
